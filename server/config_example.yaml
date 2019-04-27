@@ -1,0 +1,4 @@
+listen:
+  http: ":9801"
+  socket: ":9802"
+mode: "debug"
