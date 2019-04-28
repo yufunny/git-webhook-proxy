@@ -1,7 +1,7 @@
 package server
 
 import (
-	"git-proxy/server/protocol"
+	"git-webhook-proxy/server/protocol"
 	"github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"net"

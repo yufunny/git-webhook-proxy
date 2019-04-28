@@ -1,9 +1,9 @@
 package main
 
 import (
-	"git-proxy/server/config"
-	"git-proxy/server/handler"
-	"git-proxy/server/server"
+	"git-webhook-proxy/server/config"
+	"git-webhook-proxy/server/handler"
+	"git-webhook-proxy/server/server"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"golang.org/x/sync/errgroup"

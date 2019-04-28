@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"git-proxy/server/server"
+	"git-webhook-proxy/server/server"
 	"github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"io/ioutil"

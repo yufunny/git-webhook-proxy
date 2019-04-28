@@ -1,7 +1,7 @@
 package server
 
 import (
-	"git-proxy/utils"
+	"git-webhook-proxy/utils"
 	log "github.com/sirupsen/logrus"
 	"net"
 	"sync"
