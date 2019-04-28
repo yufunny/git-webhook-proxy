@@ -119,6 +119,16 @@ func (s *SocketServer) clear() {
 					conn.TimeOutEvent()
 					conn.Close()
 					delete(s.connections, k)
+					for url, keys := range s.urls {
+						for idx, key := range keys {
+							if key == k {
+								s.urls[url] = append(s.urls[url][:idx], s.urls[url][idx+1:]...)
+							}
+						}
+						if len(s.urls[url]) == 0 {
+							delete(s.urls, url)
+						}
+					}
 				}
 			}
 		}
