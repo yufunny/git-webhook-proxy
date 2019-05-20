@@ -13,8 +13,17 @@ func NotifyHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	logrus.Debugf("notify body:%s", body)
 	w.Write([]byte("ok"))
+	gitlabHeader := r.Header.Get("X-Gitlab-Event")
 	res := gjson.Parse(string(body))
-	url := res.Get("repository.ssh_url").String()
+	var url string
+	if gitlabHeader == "" {
+		url = res.Get("repository.ssh_url").String()
+	} else {
+		url = res.Get("project.ssh_url").String()
+	}
+	if url == "" {
+		return
+	}
 	logrus.Debugf("notify url:%s", url)
-	server.GetServer().Dispatch(url, string(body))
+	go server.GetServer().Dispatch(url, string(body))
 }
