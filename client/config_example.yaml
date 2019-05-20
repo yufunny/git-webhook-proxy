@@ -1,5 +1,9 @@
 server: "127.0.0.1:9802"
+http: ":9803"
 subscribes:
   -
-    url: "git@git.yufu.fun:maoxiaoying/webhook-test.git"
+    url: "git@xxx.com/test.git"
+    branch: "beta"
+    action: "pull"
+    directory: "~/foo"
 mode: "debug"

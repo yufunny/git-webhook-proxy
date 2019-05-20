@@ -15,6 +15,7 @@ type SubscribeConfig struct {
 
 type SystemConfig struct {
 	Server     string            `yaml:"server"`
+	HttpListen string 			 `yaml:"http"`
 	Subscribes []SubscribeConfig `yaml:"subscribes"`
 	Mode       string            `yaml:"mode"`
 }
