@@ -151,7 +151,12 @@ func NotifyHandler(w http.ResponseWriter, r *http.Request) {
 func deal(body string) {
 	res := gjson.Parse(body)
 	url := res.Get("repository.ssh_url").String()
-
+	if url == "" {
+		url = res.Get("project.ssh_url").String()
+	}
+	if url == "" {
+		return
+	}
 	var subscribed *config.SubscribeConfig
 	var ok bool
 	if subscribed, ok = subscribeMap[url]; !ok {
