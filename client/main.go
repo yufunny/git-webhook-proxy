@@ -116,8 +116,8 @@ func readCon(conn net.Conn) {
 
 func subSocket(conn net.Conn, config *config.SystemConfig) {
 	urls := make([]string, 0)
-	for _, subscribe := range config.Subscribes {
-		subscribeMap[subscribe.Url] = &subscribe
+	for k, subscribe := range config.Subscribes {
+		subscribeMap[subscribe.Url] = &config.Subscribes[k]
 		urls = append(urls, subscribe.Url)
 	}
 	msg, _ := json.Marshal(urls)
