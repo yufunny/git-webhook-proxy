@@ -8,7 +8,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli"
-	"golang.org/x/sync/errgroup"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -21,7 +20,6 @@ import (
 var (
 	configPath   string
 	systemConfig *config.SystemConfig
-	g            errgroup.Group
 	beforePull = "git reset --hard && git checkout "
 	subscribeMap = make(map[string]*config.SubscribeConfig, 0)
 )
@@ -86,6 +84,7 @@ func run(_ *cli.Context) {
 	if systemConfig.HttpListen != "" {
 		go subHttp()
 	}
+	go heardbeat(conn)
 	readCon(conn)
 
 }
@@ -180,4 +179,15 @@ func deal(body string) {
 		fmt.Println(err)
 	}
 	log.Infof("cmd output:%s", out)
+}
+
+
+func heardbeat(conn net.Conn) {
+	tick := time.NewTicker(time.Minute)
+	for {
+		select {
+		case <-tick.C:
+			conn.Write(protocol.EnPack(protocol.Heartbeat , []byte("ping")))
+		}
+	}
 }

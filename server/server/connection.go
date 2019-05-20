@@ -1,7 +1,7 @@
 package server
 
 import (
-	"git-webhook-proxy/server/protocol"
+	"git-webhook-proxy/protocol"
 	"github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"net"
@@ -56,7 +56,6 @@ func (c *Connection) Listen() {
 			logrus.Errorf("connection error: %s, %s", c.conn.RemoteAddr().String(), err.Error())
 			return
 		}
-		logrus.Debugf("receive msg :%s", buffer)
 		protocolId, msg := protocol.DePack(append(tmpBuffer, buffer[:n]...))
 		if protocolId < 0 {
 			tmpBuffer = make([]byte, 0)
@@ -64,6 +63,7 @@ func (c *Connection) Listen() {
 			tmpBuffer = append(tmpBuffer, buffer[:n]...)
 			continue
 		} else {
+			logrus.Debugf("receive msg :%s", buffer)
 			pMsg := &PMessage{
 				protocolId,
 				string(msg),

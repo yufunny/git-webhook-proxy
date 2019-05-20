@@ -9,6 +9,9 @@ const (
 	ConstHeader  = "gitproxy"
 	ConstPLength = 4 // 协议id
 	ConstMLength = 4 // 消息长度
+
+	Heartbeat = 11
+	Subscribe = 101
 )
 
 //封包
