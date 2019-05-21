@@ -84,7 +84,7 @@ func run(_ *cli.Context) {
 	if systemConfig.HttpListen != "" {
 		go subHttp()
 	}
-	go heardbeat(conn)
+	go heartbeat(conn)
 	readCon(conn)
 
 }
@@ -109,6 +109,7 @@ func readCon(conn net.Conn) {
 		} else {
 			log.Debugf("got message from server: %d,%s", protocolId, msg)
 			go deal(string(msg))
+			tmpBuffer = make([]byte, 0)
 		}
 	}
 }
@@ -187,7 +188,7 @@ func deal(body string) {
 }
 
 
-func heardbeat(conn net.Conn) {
+func heartbeat(conn net.Conn) {
 	tick := time.NewTicker(time.Minute)
 	for {
 		select {
